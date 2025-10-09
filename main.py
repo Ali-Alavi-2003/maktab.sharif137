@@ -1,16 +1,24 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from datetime import datetime
+hour = datetime.now().hour
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def restrict_hours(start=0, end=0):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            if start <= hour < end:
+                print('OK')
+                return func(*args, **kwargs)
+            else:
+                print('wrong')
+                return None
+
+        return wrapper
+
+    return decorator
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@restrict_hours(start=9, end=17)
+def do_work():
+    return do_work
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+do_work()
